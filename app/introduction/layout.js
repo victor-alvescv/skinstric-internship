@@ -1,8 +1,7 @@
 import Head from "next/head";
-import "./globals.css";
- 
+
 export const metadata = {
-  title: 'Skinstric | Home',
+  title: 'Skinstric | Introduction',
   description: 'The official Next.js Course Dashboard, built with App Router.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };

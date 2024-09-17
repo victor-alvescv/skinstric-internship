@@ -1,101 +1,213 @@
-import Image from "next/image";
+"use client";
+import Link from "next/link";
+import Header from "./components/Header";
+import { IoPlaySharp } from "react-icons/io5";
+import { useEffect } from "react";
+import gsap from "gsap";
+import Button from "./components/Button";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  useEffect(() => {
+    gsap.fromTo(
+      "#title",
+      { y: 200 },
+      { y: 0, duration: 1.5, ease: "power4.out" }
+    );
+    gsap.fromTo("#right-link", { x: -50, opacity: 0 }, { x: 0, opacity: 1 });
+    gsap.fromTo("#left-link", { x: 50, opacity: 0 }, { x: 0, opacity: 0.5 });
+    gsap.fromTo("#diamond", { opacity: 0 }, { opacity: 1, duration: 1 });
+  }, []);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  function handleAnimationsIn() {
+    gsap.to("#title", {
+      marginLeft: 0,
+      duration: 0.7,
+    });
+    gsap.to(".bottom-span", {
+      transform: "translateX(-120px)",
+      ease: "power2.out",
+      delay: 0.1,
+      duration: 1,
+    });
+    gsap.to(".research--btn", {
+      transform: "translateX(-320px)",
+    });
+  }
+
+  function handleAnimationsOut() {
+    gsap.to("#title", {
+      marginLeft: "auto",
+      duration: 0.7,
+    });
+    gsap.to(".bottom-span", {
+      transform: "translateX(0px)",
+      ease: "power2.out",
+      delay: 0.1,
+      duration: 0.7,
+    });
+    gsap.to(".research--btn", {
+      transform: "translateX(0px)",
+    });
+  }
+
+  return (
+    <>
+      <div
+        style={{ padding: "0 32px 36px 32px" }}
+        className="index-page bubble flex flex-col justify-center relative items-center h-[100vh]"
+      >
+        <video
+          className="absolute blur-sm top-0 w-[100%] h-[100%] object-cover z-[-1]"
+          autoPlay
+          loop
+          muted
+        >
+          <source src="bubble-animation.mp4" type="video/mp4"></source>
+        </video>
+        <Header />
+        <div id="title" className="m-auto  text-center">
+          <div>
+            <h1 className="max-w-[100%] dynamic--font tracking-[-.07em] leading-[.945] text-[124px]">
+              <span className="relative inline-block">Sophisticated</span>
+              <br />
+              <span
+                style={{ marginRight: "0px" }}
+                className="relative  bottom-span inline-block"
+              >
+                Skincare
+              </span>
+            </h1>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div className="grid grid-cols-7 justify-items-center mx-[67px] my-0 max-w-[95%] w-full tracking-[-.02em]">
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] font-roobert"
+          >
+            Premium Custom Skincare For
+            <br />
+            Faces With Sophisticated Needs
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            Proprietary Algorithms For
+            <br />
+            Effective Formula Design
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            Complete Control over
+            <br />
+            Skincare ingredients
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            Expert clinical
+            <br />
+            diagnostics + guidance
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            Fully Customizable
+            <br />
+            from Scratch
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            FDA / TGA Approved
+            <br />
+            Compound Pharmacies
+          </p>
+          <p
+            style={{
+              fontSize: "clamp(10px, 7.5384615385px + .6153846154vw, 14px)",
+            }}
+            className="max-w-[254px] opacity-[0.7]"
+          >
+            Highly Personalized
+            <br />
+            Experience
+          </p>
+        </div>
+        <div
+          className=" absolute top-[50%] left-[92%] flex items-center gap-x-4"
+          style={{ transform: "translate(0%, -50%) translate(0px, -0.1562px)" }}
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <span
+            id="diamond"
+            className="w-[23.43vw] h-[23.43vw] dotted--square2 absolute top-[50%] left-[92%]"
+          ></span>
+          <div style={{ transform: "translate3d(-20px, 0, 0)" }}>
+            <Link
+              href={"/introduction"}
+              onMouseEnter={handleAnimationsIn}
+              onMouseLeave={handleAnimationsOut}
+            >
+              <Button
+                label={"LET'S BEGIN"}
+                arrow={"right"}
+                order={"label-first"}
+              />
+            </Link>
+          </div>
+        </div>
+        <div
+          className="research--btn absolute top-[50%] left-[0%] flex items-center gap-x-4"
+          style={{ transform: "translate(0%, -50%) translate(0px, -0.0312px)" }}
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <span
+            id="diamond"
+            style={{ opacity: "0.5" }}
+            className="w-[23.43vw] h-[23.43vw] dotted--square absolute top-[50%] left-[0%]"
+          ></span>
+          <div style={{ transform: "translate3d(20px, 0, 0)" }}>
+            <button
+              style={{ transform: "translate(0px, 0px)" }}
+              disabled
+              id="left-link"
+              className="cursor-not-allowed opacity-50 text-[#a0a4ab] ml-[32px] inline-flex items-center justify-center dynamic--font3 leading-[1.6] tracking-[-.02em]"
+            >
+              <span className="shrink-0 h-[24px] w-[24px]">
+                <span className="items-center play-icon rotate-[45deg] text-[#a0a4ab] inline-flex justify-center">
+                  <IoPlaySharp
+                    style={{ padding: "calc( 20px * .35)" }}
+                    className="text-[24px] rotate-[140deg]"
+                  />
+                </span>
+              </span>
+
+              <span
+                style={{ fontSize: "clamp(10px, 2px + .625vw, 14px)" }}
+                className="pl-[18px] font-roobert"
+              >
+                CLINICAL RESEARCH
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

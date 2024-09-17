@@ -2,26 +2,408 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: fa;
+  src: url("../app/fonts/Roobert1.ttf");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: fa2;
+  src: url("../app/fonts/Roobert2.ttf");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  color: #1a1b1c;
+  background: rgba(128, 128, 128, 0.274);
+}
+
+::placeholder {
+  color: #1a1b1c;
+}
+
+.iconButton {
+  flex-shrink: 0;
+  height: var(24px);
+  width: var(24px);
+}
+
+.iconButton--content {
+  align-items: center;
+  display: inline-flex;
+  height: inherit;
+  justify-content: center;
+  padding: calc(24px * 0.35);
+  position: relative;
+  transform: rotate(45deg);
+  width: inherit;
+}
+
+.iconButton--content svg {
+  height: auto;
+  max-width: 100%;
+  transform: rotate(15deg);
+}
+
+.iconButton-reverse {
+  transform: rotate(-45deg) !important;
+}
+
+.iconButton--content:before {
+  border: 1px solid;
+}
+
+.iconButton--content:before,
+.iconButton--content:after {
+  content: "";
+  height: 100%;
+  position: absolute;
+  transition: transform 0.5s cubic-bezier(0.08, 0.5, 0.44, 0.96);
+  width: 100%;
+}
+.begin-link:hover .iconButton--content:before {
+  transform: scale(2);
+}
+
+.begin-link:hover .iconButton--content:after {
+  transform: scale(1.5385);
+}
+
+.begin-link:hover .dotted--square2:after {
+  transform: translateX(30px);
+}
+
+.begin-link:hover .research--btn {
+  opacity: 0 !important;
+}
+
+.begin--text,
+.begin--text-opposite {
+  transition: all 300ms ease;
+}
+
+.begin-link:hover .begin--text {
+  transform: translateX(-20px);
+}
+
+.begin-link:hover .begin--text-opposite {
+  transform: translateX(20px);
+}
+
+.iconButton--content:after {
+  border: 1px dotted;
+}
+
+.index-page {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: var(--offset-x);
+  padding-right: var(--offset-x);
+  width: 100%;
+  z-index: 10
+}
+
+.introduction-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding-bottom: 36px;
+  width: 100%;
+  position: relative;
+}
+
+.introduction--square {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: -1;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "fa2"; /* Ensure to provide a fallback font */
+  background-color: white;
+  color: #1a1b1c;
+  overflow-x: hidden;
+  min-height: calc(var(--vh, 1vh) * 100);
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  overflow: clip;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.font-roobert {
+  font-family: "fa" !important;
+}
+
+.font-roobert2 {
+  font-family: "fa2" !important;
+}
+
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid #1a1b1c;
+  transform: rotate(-135deg);
+  /* Change color as needed */
+}
+
+.dynamic--font {
+  font-size: clamp(86px, 2px + 6.5625vw, 128px);
+}
+
+.dynamic--font2 {
+  font-size: clamp(10px, 2px + 0.625vw, 14px);
+}
+
+.dynamic--font3 {
+  font-size: clamp(10px, 2px + 0.625vw, 14px);
+}
+
+.play-icon:before {
+  content: "";
+  height: 100%;
+  position: absolute;
+  transition: transform 0.5s cubic-bezier(0.08, 0.5, 0.44, 0.96);
+  width: 100%;
+  border: 1px solid;
+}
+
+.play-icon:after {
+  content: "";
+  height: 100%;
+  position: absolute;
+  transition: transform 0.5s cubic-bezier(0.08, 0.5, 0.44, 0.96);
+  width: 100%;
+  border: 1px dotted;
+}
+
+input::placeholder {
+  color: gray;
+  font-family: fa2;
+
+}
+
+.dotted--square2,
+.dotted--square,
+.dotted--square2:before,
+.dotted--square2:after {
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-image: repeating-linear-gradient(
+      -18deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      72deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      162deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      252deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    );
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+}
+
+.dotted--square2 {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background-image: repeating-linear-gradient(
+      -18deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      72deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      162deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      252deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    );
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+}
+
+.dotted--square2:before {
+  --base-transform: translate(-50%, -50%);
+  opacity: 0.6;
+  transform: var(--base-transform);
+  transition: transform 150ms cubic-bezier(0.08, 0.5, 0.44, 0.96) 150ms;
+  border: inherit;
+  content: "";
+  height: inherit;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+}
+
+.dotted--square2:after {
+  --base-transform: translate(-50%, -50%) scale(1.1);
+  opacity: 0;
+  transform: var(--base-transform);
+  transition: transform 150ms cubic-bezier(0.08, 0.5, 0.44, 0.96),
+    opacity 0s ease 150ms;
+  border: inherit;
+  content: "";
+  height: inherit;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+}
+
+#name-label {
+  transition: all 0.15s cubic-bezier(0.08, 0.5, 0.44, 0.96);
+  pointer-events: none;
+}
+
+
+/* ----- */
+
+.dotted-span-square,
+.dotted-span-square:after,
+.dotted-span-square:before {
+  background-image: repeating-linear-gradient(
+      -18deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      72deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      162deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    ),
+    repeating-linear-gradient(
+      252deg,
+      #58595a,
+      #58595a 1px,
+      #0000 0,
+      #0000 5px,
+      #58595a 0
+    );
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
+  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+}
+
+.dotted-span-square:before {
+  border: inherit;
+  content: "";
+  opacity: 0.6;
+  height: inherit;
+  position: absolute;
+  width: inherit;
+  animation: BeforeSpin 480s infinite linear;
+}
+
+.dotted-span-square:after {
+  border: inherit;
+  opacity: 0.3;
+  content: "";
+  height: inherit;
+  position: absolute;
+  width: inherit;
+  transform: scale(1.2);
+  animation: AfterSpin 240s infinite linear;
+}
+
+.dotted-span-square {
+  animation: spin 120s linear infinite;
+}
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(45deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes BeforeSpin {
+  0% {
+    transform: rotate(90deg) scale(1.1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+@keyframes AfterSpin {
+  0% {
+    transform: rotate(90deg) scale(1.2);
+  }
+  to {
+    transform: rotate(360deg) scale(1.2);
   }
 }
