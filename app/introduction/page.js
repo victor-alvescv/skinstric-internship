@@ -33,7 +33,7 @@ export default function Introduction() {
 
   // Google Api
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBhaUyPeQjr0zYkM8HI42Ad1YP5tsH7u50",
+    googleMapsApiKey: 'AIzaSyBhaUyPeQjr0zYkM8HI42Ad1YP5tsH7u50',
     libraries,
   });
 
