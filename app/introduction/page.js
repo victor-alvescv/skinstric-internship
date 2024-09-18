@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import axios from "axios";
 import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { useRouter } from "next/navigation";
+import OkButton from "../components/OkButton";
 const libraries = ["places"];
 
 export default function Introduction() {
@@ -19,8 +20,7 @@ export default function Introduction() {
   const [phase1, setPhase1] = useState(true);
   const [phase2, setPhase2] = useState(false);
   const [infoArr, setInfoArr] = useState({ name, location });
-  const [placeholder, setPlaceholder] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const inputRef = useRef("");
   const labelRef = useRef(null);
@@ -31,6 +31,7 @@ export default function Introduction() {
   const proceedRef = useRef(null);
   const inputGoogleRef = useRef(null);
 
+  // Google Api
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBhaUyPeQjr0zYkM8HI42Ad1YP5tsH7u50",
     libraries,
@@ -38,19 +39,10 @@ export default function Introduction() {
 
   function handleOnPlacesChange() {
     let address = inputGoogleRef.current.getPlaces();
-    setLocation(address[0].formatted_address);
-    console.log(infoArr, location)
-    setTimeout(() => {
-      router.push('/')
-    }, 3000)
+    setLocation(address[0].formatted_address || "");
   }
 
-  function previousPhase() {
-    setPhase1(true);
-    setShowLabel(false);
-    setProceed(true);
-  }
-
+  // Handle API
   async function handleData() {
     try {
       const apiEndpoint =
@@ -62,8 +54,14 @@ export default function Introduction() {
     }
   }
 
-  function handleProceed() {
+  // Phase Cases
+  function previousPhase() {
+    setPhase1(true);
+    setShowLabel(false);
     setProceed(true);
+  }
+
+  function handleProceed() {
     setShowLabel(true);
     if (name) infoArr.name = name;
     if (location) {
@@ -79,6 +77,7 @@ export default function Introduction() {
   function handleNameKeyDown(event) {
     if (event.key === "Enter") {
       event.preventDefault();
+      if (phase2) return;
       if (inputRef.current) {
         inputRef.current.blur();
       }
@@ -100,7 +99,8 @@ export default function Introduction() {
     if (elem === 2) {
       setLabelText(2);
       setShowLabel(false);
-    } else {
+      setTextLength(false);
+    } else if (elem === 1) {
       if (textLength) {
         setShowLabel(false);
       } else {
@@ -108,6 +108,23 @@ export default function Introduction() {
       }
       setLabelText(1);
     }
+  }
+
+  useEffect(() => {
+    console.log(textLength);
+  }, [textLength]);
+
+  // onChanges
+  function handleName(event) {
+    setName(event.target.value || "");
+    setTextLength(event.target.value.length > 0);
+    setProceed(event.target.value.length > 0);
+  }
+
+  function handleLocation(event) {
+    setLocation(event.target.value || "");
+    setTextLength(event.target.value.length > 0);
+    setProceed(event.target.value.length > 0);
   }
 
   useEffect(() => {
@@ -150,17 +167,6 @@ export default function Introduction() {
       );
     }
   }, []);
-
-  function handleName(event) {
-    setName(event.target.value || "");
-    setTextLength(event.target.value.length > 0);
-    setProceed(event.target.value.length > 0);
-  }
-
-  function handleLocation(event) {
-    setLocation(event.target.value || "");
-    setTextLength(event.target.value.length > 0);
-  }
 
   return (
     <div className="flex flex-auto flex-col h-[100vh]">
@@ -268,7 +274,9 @@ export default function Introduction() {
                           width: "calc((21ch - 5.5ch))",
                           fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
                         }}
-                        placeholder=""
+                        placeholder={
+                          !textLength && !showLabel ? "Enter a location" : ""
+                        }
                         onFocus={() => handleInputAnimations(2)}
                         onBlur={() => handleInputAnimations(1)}
                         onChange={handleLocation}
@@ -337,6 +345,7 @@ export default function Introduction() {
           </div>
         </div>
       </main>
+      <OkButton />
     </div>
   );
 }
