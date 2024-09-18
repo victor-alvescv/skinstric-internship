@@ -63,7 +63,7 @@ export default function OkButton() {
           className="left-[32px] pop-up fixed top-[64px] z-[20] w-[432px] text-[#fcfcfc] tracking-[0] max-w-full"
         >
           <div className="border-b border-solid relative py-[12px] px-[15px] font-roobert text-[#fcfcfc]">
-            This is our test environment, and we're currently in open Beta. Any
+            This is our test environment, and we&apos;re currently in open Beta. Any
             orders you make here will not be fulfilled
           </div>
           <div className="items-center flex justify-end relative py-[0px] px-[15px]">
