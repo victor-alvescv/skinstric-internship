@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
       <head>
         <link
           rel="icon"
-          href="https://skinstric-nine.vercel.app/img/favicon/favicon-16x16.png"
+          href='https://skinstric-nine.vercel.app/img/favicon/favicon-16x16.png'
           type="image/png"
         />
       </head>
