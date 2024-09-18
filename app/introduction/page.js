@@ -33,7 +33,7 @@ export default function Introduction() {
 
   // Google Api
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBhaUyPeQjr0zYkM8HI42Ad1YP5tsH7u50",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_PLACES_API_KEY,
     libraries,
   });
 
@@ -99,7 +99,6 @@ export default function Introduction() {
     if (elem === 2) {
       setLabelText(2);
       setShowLabel(false);
-      setTextLength(false);
     } else if (elem === 1) {
       if (textLength) {
         setShowLabel(false);
@@ -232,6 +231,7 @@ export default function Introduction() {
                     className="border-b-[1px] bg-transparent border-[#1a1b1c] py-[5px] text-center outline-none text-[#1a1b1c] border-solid leading-[1] tracking-[-.07em]"
                     type="text"
                   ></input>
+
                   <label
                     id="name-label"
                     ref={labelRef}
@@ -240,7 +240,7 @@ export default function Introduction() {
                       fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
                     }}
                     className={`text-[#1a1b1c] ${
-                      showLabel ? "opacity-[1]" : "opacity-[0]"
+                      showLabel && !textLength ? "opacity-[1]" : "opacity-[0]"
                     } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
                   >
                     Introduce yourself

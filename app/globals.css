@@ -473,3 +473,36 @@ input::placeholder {
     transform: rotate(360deg) scale(1.2);
   }
 }
+
+@media (max-width: 1024px) {
+  #name-label {
+    font-size: 34px !important;
+  }
+  input {
+    font-size: 34px !important;
+  }
+  .dotted-span-square {
+    width: 38vw;
+    height: 38vw;
+  }
+}
+
+@media (max-width: 500px) {
+  #btn {
+    width: 350px !important;
+  }
+}
+
+@media (max-width: 410px) {
+  #btn {
+    width: 280px !important;
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .dotted-span-square {
+    width: 48vw;
+    height: 48vw;
+  }
+}
