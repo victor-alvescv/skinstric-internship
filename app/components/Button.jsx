@@ -3,7 +3,7 @@ export default function Button({ label, arrow, order }) {
     <div
       style={{ transform: "translate(0px, 0px)" }}
       id="right-link"
-      className="begin-link btn--horizontal inline-flex items-center justify-center dynamic--font3 leading-[1.6] tracking-[-.02em]"
+      className="btn-link btn--horizontal inline-flex items-center justify-center dynamic--font3 leading-[1.6] tracking-[-.02em]"
     >
       <span
         style={{
@@ -13,8 +13,8 @@ export default function Button({ label, arrow, order }) {
         }}
         className={` font-roobert ${
           order === "label-first"
-            ? "begin--text pr-[18px]"
-            : "begin--text-opposite pl-[18px]"
+            ? "btn--text pr-[18px]"
+            : "btn--text-opposite pl-[18px]"
         }`}
       >
         {label}
