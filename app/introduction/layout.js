@@ -6,15 +6,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel="icon"
-          href="https://skinstric-nine.vercel.app/img/favicon/favicon-16x16.png"
-          type="image/png"
-        />
-      </head>
-      <body>{children}</body>
-    </html>
+    <>
+      <html lang="en">
+        <head>
+          <link
+            rel="icon"
+            href="https://skinstric-nine.vercel.app/img/favicon/favicon-16x16.png"
+            type="image/png"
+          />
+        </head>
+        <body>{children}</body>
+      </html>
+    </>
   );
 }

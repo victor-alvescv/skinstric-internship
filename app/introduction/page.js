@@ -1,26 +1,46 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../components/Header";
 import Link from "next/link";
 import gsap from "gsap";
 import Button from "../components/Button";
 import axios from "axios";
-import { useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
-import { useRouter } from "next/navigation";
+import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import OkButton from "../components/OkButton";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import dynamic from "next/dynamic";
+
+// Preloader Component
+const Preloader = dynamic(() => import("../components/PreLoader"), {
+  ssr: false, // Ensure it only loads on the client side
+});
+
 const libraries = ["places"];
 
 export default function Introduction() {
   const [showLabel, setShowLabel] = useState(true);
   const [labelText, setLabelText] = useState(1);
-  const [textLength, setTextLength] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [latLng, setLatLng] = useState({ lat: null, lng: null });
   const [phase1, setPhase1] = useState(true);
   const [phase2, setPhase2] = useState(false);
-  const [infoArr, setInfoArr] = useState({ name, location });
-  const router = useRouter();
+  const [nameLength, setNameLength] = useState(false);
+  const [validLocation, setValidLocation] = useState(false);
+  const [locationLength, setLocationLength] = useState(false);
+  const [bottomText, setBottomText] = useState("");
+  const [box, setBox] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const infoArr = useMemo(
+    () => ({
+      name: name,
+      location: location,
+      latLng: latLng,
+    }),
+    [name, location, latLng]
+  );
 
   const inputRef = useRef("");
   const labelRef = useRef(null);
@@ -32,15 +52,10 @@ export default function Introduction() {
   const inputGoogleRef = useRef(null);
 
   // Google Api
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_PLACES_API_KEY,
     libraries,
   });
-
-  function handleOnPlacesChange() {
-    let address = inputGoogleRef.current.getPlaces();
-    setLocation(address[0].formatted_address || "");
-  }
 
   // Handle API
   async function handleData() {
@@ -54,6 +69,10 @@ export default function Introduction() {
     }
   }
 
+  useEffect(() => {
+    console.log(infoArr);
+  }, [infoArr]);
+
   // Phase Cases
   function previousPhase() {
     setPhase1(true);
@@ -63,32 +82,42 @@ export default function Introduction() {
 
   function handleProceed() {
     setShowLabel(true);
-    if (name) infoArr.name = name;
-    if (location) {
-      infoArr.location = location;
-      setShowLabel(false);
-    }
-    console.log(infoArr);
     setPhase2(true);
     setProceed(false);
     setPhase1(false);
   }
 
+  function handleLocationKeyDown(event) {
+    if (event.key === "Enter") {
+      if (!locationLength) {
+        setBottomText("Type your location above to proceed");
+      } else if (locationLength) {
+        setBottomText("Type a valid location above to proceed");
+        toast.info("Select an approximate region for collecting weather data", {
+          position: "top-right",
+          className: "toast",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
+  }
+
   function handleNameKeyDown(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      if (phase2) return;
+      if (!nameLength) {
+        return;
+      }
       if (inputRef.current) {
         inputRef.current.blur();
       }
       setProceed(true);
       setShowLabel(true);
-      if (name) infoArr.name = name;
-      if (location) {
-        infoArr.location = location;
-        setShowLabel(false);
-      }
-      console.log(infoArr);
       setPhase2(true);
       setProceed(false);
       setPhase1(false);
@@ -100,31 +129,45 @@ export default function Introduction() {
       setLabelText(2);
       setShowLabel(false);
     } else if (elem === 1) {
-      if (textLength) {
-        setShowLabel(false);
-      } else {
-        setShowLabel(true);
-      }
+      setShowLabel(true);
       setLabelText(1);
     }
   }
 
-  useEffect(() => {
-    console.log(textLength);
-  }, [textLength]);
-
   // onChanges
   function handleName(event) {
     setName(event.target.value || "");
-    setTextLength(event.target.value.length > 0);
+    setNameLength(event.target.value.length > 0);
     setProceed(event.target.value.length > 0);
   }
 
   function handleLocation(event) {
     setLocation(event.target.value || "");
-    setTextLength(event.target.value.length > 0);
-    setProceed(event.target.value.length > 0);
+    setLocationLength(event.target.value.length > 0);
   }
+
+  // Handle Place Change
+  const handlePlaceChanged = () => {
+    setBottomText("");
+    if (inputGoogleRef.current) {
+      const place = inputGoogleRef.current.getPlace();
+      if (place && place.geometry) {
+        setLocation(place.formatted_address);
+        setLatLng({
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        });
+        setValidLocation(true);
+      } else {
+        setValidLocation(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -165,7 +208,15 @@ export default function Introduction() {
         { transform: "translate(0px)", opacity: 1 }
       );
     }
-  }, []);
+  }, [loading]);
+
+  if (loading) {
+    return (
+      <React.Suspense fallback={<div></div>}>
+        <Preloader />
+      </React.Suspense>
+    );
+  }
 
   return (
     <div className="flex flex-auto flex-col h-[100vh]">
@@ -211,6 +262,7 @@ export default function Introduction() {
             </div>
             {phase1 ? (
               <form // name
+                onKeyDown={handleNameKeyDown}
                 ref={formRef}
                 style={{
                   clipPath: "inset(0%)",
@@ -225,7 +277,6 @@ export default function Introduction() {
                     onFocus={() => handleInputAnimations(2)}
                     onBlur={() => handleInputAnimations(1)}
                     onChange={handleName}
-                    onKeyDown={handleNameKeyDown}
                     value={name || ""}
                     ref={inputRef}
                     className="border-b-[1px] bg-transparent border-[#1a1b1c] py-[5px] text-center outline-none text-[#1a1b1c] border-solid leading-[1] tracking-[-.07em]"
@@ -240,7 +291,7 @@ export default function Introduction() {
                       fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
                     }}
                     className={`text-[#1a1b1c] ${
-                      showLabel && !textLength ? "opacity-[1]" : "opacity-[0]"
+                      showLabel && !nameLength ? "opacity-[1]" : "opacity-[0]"
                     } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
                   >
                     Introduce yourself
@@ -257,60 +308,60 @@ export default function Introduction() {
               </form>
             ) : (
               // location
-              <form
-                ref={formRef}
-                style={{
-                  clipPath: "inset(0%)",
-                }}
-              >
-                <div className="relative">
-                  {isLoaded && (
-                    <StandaloneSearchBox
-                      onLoad={(ref) => (inputGoogleRef.current = ref)}
-                      onPlacesChanged={handleOnPlacesChange}
-                    >
-                      <input
-                        style={{
-                          width: "calc((21ch - 5.5ch))",
-                          fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
-                        }}
-                        placeholder={
-                          !textLength && !showLabel ? "Enter a location" : ""
-                        }
-                        onFocus={() => handleInputAnimations(2)}
-                        onBlur={() => handleInputAnimations(1)}
-                        onChange={handleLocation}
-                        onKeyDown={handleNameKeyDown}
-                        ref={inputRef}
-                        className="border-b-[1px] bg-transparent border-[#1a1b1c] py-[5px] text-center outline-none text-[#1a1b1c] border-solid leading-[1] tracking-[-.07em]"
-                        type="text"
-                        value={location || ""}
-                      ></input>
-                    </StandaloneSearchBox>
-                  )}
-                  <label
-                    id="name-label"
-                    ref={labelRef}
-                    style={{
-                      width: `calc((21ch - 5.5ch))`,
-                      fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
+              <div className="relative">
+                {isLoaded && box && (
+                  <Autocomplete
+                    onLoad={(autocomplete) => {
+                      inputGoogleRef.current = autocomplete;
                     }}
-                    className={`text-[#1a1b1c] ${
-                      showLabel ? "opacity-[1]" : "opacity-[0]"
-                    } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
+                    onPlaceChanged={handlePlaceChanged}
+                    options={{
+                      types: ["(regions)"],
+                    }}
                   >
-                    Where are you from?
-                  </label>
+                    <input
+                      style={{
+                        width: "calc((21ch - 5.5ch))",
+                        fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
+                      }}
+                      placeholder={
+                        !locationLength && !showLabel ? "Enter a location" : ""
+                      }
+                      onKeyDown={handleLocationKeyDown}
+                      onFocus={() => handleInputAnimations(2)}
+                      onBlur={() => handleInputAnimations(1)}
+                      onChange={handleLocation}
+                      ref={inputRef}
+                      className="border-b-[1px] bg-transparent border-[#1a1b1c] py-[5px] text-center outline-none text-[#1a1b1c] border-solid leading-[1] tracking-[-.07em]"
+                      type="text"
+                      value={location || ""}
+                    ></input>
+                  </Autocomplete>
+                )}
+                <label
+                  id="name-label"
+                  ref={labelRef}
+                  style={{
+                    width: `calc((21ch - 5.5ch))`,
+                    fontSize: "clamp(44px, 12px + 2.5vw, 60px)",
+                  }}
+                  className={`text-[#1a1b1c] ${
+                    showLabel && !locationLength ? "opacity-[1]" : "opacity-[0]"
+                  } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
+                >
+                  Where are you from?
+                </label>
 
-                  <div
-                    style={{
-                      fontSize:
-                        "clamp(10px, 5.4285714286px + .4464285714vw, 14px)",
-                    }}
-                    className="min-h-[1.2em] mt-[.6em] leading-[1.2] tracking-[0] "
-                  ></div>
+                <div
+                  style={{
+                    fontSize:
+                      "clamp(10px, 5.4285714286px + .4464285714vw, 14px)",
+                  }}
+                  className="min-h-[1.2em] mt-[.6em] leading-[1.2] tracking-[0] "
+                >
+                  <p>{bottomText}</p>
                 </div>
-              </form>
+              </div>
             )}
           </div>
 
@@ -345,6 +396,19 @@ export default function Introduction() {
           </div>
         </div>
       </main>
+      <ToastContainer
+        className={"toast--container"}
+        position="top-right"
+        autoClose={5000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
       <OkButton />
     </div>
   );
