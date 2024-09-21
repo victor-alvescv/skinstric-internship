@@ -1,4 +1,4 @@
-export default function Button({ label, arrow, order }) {
+export default function Button({ label, arrow, order, main }) {
   return (
     <div
       style={{ transform: "translate(0px, 0px)" }}
@@ -23,7 +23,12 @@ export default function Button({ label, arrow, order }) {
         className="iconButton"
         style={{ order: order === "icon-first" ? 1 : 2 }} // Set order based on the `order` prop
       >
-        <span className="iconButton--content">
+        <span
+          style={{
+            padding: main ? "calc(18px* 0.35)" : "calc(24px* 0.35)",
+          }}
+          className="iconButton--content"
+        >
           <svg
             className={`${arrow === "left" && "iconButton-reverse"}`}
             width="8"
@@ -32,7 +37,7 @@ export default function Button({ label, arrow, order }) {
             fill="#1A1B1C"
             xmlns="http://www.w3.org/2000/svg"
             role="img"
-            style={{ position: "relative", top: 1, left: -1 }}
+            style={{ position: "relative", top: 1, left: -1, width: main ? '6px' : '8px' }}
           >
             <path d="m.714 6 9.429 5.444V.556L.714 6Z" fill="current"></path>
           </svg>

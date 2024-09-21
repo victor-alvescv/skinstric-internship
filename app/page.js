@@ -6,7 +6,7 @@ import gsap from "gsap";
 import Button from "./components/Button";
 
 export default function Home() {
- const beginRef = useRef(null)
+  const beginRef = useRef(null);
 
   useEffect(() => {
     gsap.fromTo(
@@ -25,13 +25,18 @@ export default function Home() {
       { x: 20, opacity: 1 }
     );
     gsap.fromTo("#diamond", { opacity: 0 }, { opacity: 1, duration: 1 });
+    gsap.fromTo(
+      ".experience__btn--wrapper",
+      { opacity: 0 },
+      { opacity: 1, delay: 0.5 }
+    );
   }, []);
 
   function handleAnimationsIn() {
     const titleElement = document.getElementById("title");
     const titleRect = titleElement.getBoundingClientRect();
     const translateX = titleRect.left * 0.95;
-    beginRef.current.classList.add('begin-btn')
+    beginRef.current.classList.add("begin-btn");
 
     gsap.to("#title", {
       x: -translateX,
@@ -52,7 +57,7 @@ export default function Home() {
   }
 
   function handleAnimationsOut() {
-    beginRef.current.classList.remove('begin-btn')
+    beginRef.current.classList.remove("begin-btn");
     gsap.to("#title", {
       x: 0,
       duration: 0.7,
@@ -85,6 +90,16 @@ export default function Home() {
                     <span className="bottom-title">Skincare</span>
                   </h1>
                 </div>
+                <div className="experience__btn--wrapper">
+                  <Link href={"/introduction"}>
+                    <Button
+                      label={"ENTER EXPERIENCE"}
+                      arrow={"right"}
+                      order={"label-first"}
+                      main={true}
+                    />
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="index-dotted-square index-left-link">
@@ -115,7 +130,10 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div ref={beginRef} className="index-dotted-square index-right-link">
+            <div
+              ref={beginRef}
+              className="index-dotted-square index-right-link"
+            >
               <span id="diamond" className="dotted-square-2"></span>
               <div className="dotted-square__link-wrapper-2">
                 <Link
@@ -124,11 +142,11 @@ export default function Home() {
                   href={"/introduction"}
                   className="dotted-square__link"
                 >
-                    <Button
-                      label={"LET'S BEGIN"}
-                      arrow={"right"}
-                      order={"label-first"}
-                    />
+                  <Button
+                    label={"LET'S BEGIN"}
+                    arrow={"right"}
+                    order={"label-first"}
+                  />
                 </Link>
               </div>
             </div>
