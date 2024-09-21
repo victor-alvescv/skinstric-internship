@@ -6,9 +6,8 @@ import gsap from "gsap";
 import Button from "./components/Button";
 import dynamic from "next/dynamic";
 
-// Preloader Component
 const Preloader = dynamic(() => import("./components/PreLoader"), {
-  ssr: false, // Ensure it only loads on the client side
+  ssr: false,
 });
 
 export default function Home() {
@@ -21,7 +20,7 @@ export default function Home() {
       const timer = setTimeout(() => {
         setLoading(false);
         sessionStorage.setItem("preloaderShown", "true");
-      }, 6000);
+      }, 7000);
       return () => clearTimeout(timer);
     } else {
       setLoading(false);

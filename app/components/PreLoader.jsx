@@ -1,5 +1,6 @@
 "use client";
 
+import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 
 const Preloader = () => {
@@ -12,7 +13,17 @@ const Preloader = () => {
     }, 1000);
 
     const hideTimeout = setTimeout(() => {
-      preloaderRef.current.style.opacity = 0;
+      gsap.to('.scale-1', {
+        y: -50,
+        delay: .2
+      })
+      gsap.to('.scale-1-1', {
+        y: -50,
+        delay: .1
+      })
+      gsap.to('.scale-1-2', {
+        y: -50
+      })
     }, 5000);
     return () => {
       clearTimeout(timeout);
@@ -22,7 +33,7 @@ const Preloader = () => {
 
   return (
     <div ref={preloaderRef} className="preloader_container">
-      <span className="dotted-square-preloader preloader_square"></span>
+      <span className="dotted-square-preloader preloader_square scale-1"></span>
 
       <div
         ref={preloaderMaskRef}
