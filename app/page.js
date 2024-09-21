@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import Header from "./components/Header";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Button from "./components/Button";
 
 export default function Home() {
+ const beginRef = useRef(null)
+
   useEffect(() => {
     gsap.fromTo(
       "#title",
@@ -29,6 +31,7 @@ export default function Home() {
     const titleElement = document.getElementById("title");
     const titleRect = titleElement.getBoundingClientRect();
     const translateX = titleRect.left * 0.95;
+    beginRef.current.classList.add('begin-btn')
 
     gsap.to("#title", {
       x: -translateX,
@@ -49,6 +52,7 @@ export default function Home() {
   }
 
   function handleAnimationsOut() {
+    beginRef.current.classList.remove('begin-btn')
     gsap.to("#title", {
       x: 0,
       duration: 0.7,
@@ -111,7 +115,7 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="index-dotted-square index-right-link">
+            <div ref={beginRef} className="index-dotted-square index-right-link">
               <span id="diamond" className="dotted-square-2"></span>
               <div className="dotted-square__link-wrapper-2">
                 <Link
@@ -120,13 +124,11 @@ export default function Home() {
                   href={"/introduction"}
                   className="dotted-square__link"
                 >
-                  <div className="begin-btn">
                     <Button
                       label={"LET'S BEGIN"}
                       arrow={"right"}
                       order={"label-first"}
                     />
-                  </div>
                 </Link>
               </div>
             </div>

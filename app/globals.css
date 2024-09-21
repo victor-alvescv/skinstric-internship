@@ -45,7 +45,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  margin-bottom: 36px;
+  padding-bottom: 36px;
   position: relative;
   z-index: 1;
   margin-left: auto;
@@ -243,58 +243,9 @@
   will-change: transform;
 }
 
-.dotted-square-2:after {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(1.1);
-  transition: transform 0.3s cubic-bezier(0.08, 0.5, 0.44, 0.96) calc(0.3s / 2);
-  border: inherit;
-    content: "";
-    height: inherit;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    width: inherit;
-    background-image: repeating-linear-gradient(
-      -18deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      72deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      162deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      252deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    );
-  background-position: 0 0, 0 0, 100% 0, 0 100%;
-  background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
-}
-
-.dotted-square-2:before {
-  opacity: 0.6;
+.dotted-square-2:before, .dotted-square-2:after {
   transform: translate(-50%, -50%);
-  transition: transform 0.3s cubic-bezier(0.08, 0.5, 0.44, 0.96) calc(0.3s / 2);
+  transition: all 0.3s cubic-bezier(0.08, 0.5, 0.44, 0.96) calc(0.3s / 2);
   border: inherit;
   content: "";
   height: inherit;
@@ -339,12 +290,32 @@
   background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
 }
 
-.dotted-square__link-wrapper-2 {
-  transform: translate3d(-20px, 0, 0);
+.dotted-square-2:before {
+  opacity: 0;
+  scale: 1.1;
+  transform-origin: -10% 20%;
 }
 
-.begin-btn:hover.dotted-square-2:before {
-      transform: scale(1.5);
+.dotted-square-2:after {
+  opacity: 0.6;
+  scale: 1;
+  transform-origin: -10% 20%;
+}
+
+.begin-btn:hover > .dotted-square-2:before {
+  opacity: 0.3;
+  scale: 1.3;
+  transition-delay: .3s;
+}
+
+.begin-btn:hover > .dotted-square-2:after {
+  scale: 1.15;
+}
+
+/* ------------------------------------------------------------------------------------------------- */
+
+.dotted-square__link-wrapper-2 {
+  transform: translate3d(-20px, 0, 0);
 }
 
 .dotted-square__link {
@@ -968,6 +939,33 @@ input::placeholder {
     transform: rotate(360deg) scale(1.2);
   }
 }
+
+@media (max-width: 1440px) {
+  .bottom-grid-container {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 100%;
+  }
+  .bottom-grid-container>p:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 1250px) {
+  .bottom-grid-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .bottom-grid-container>p:nth-last-child(2) {
+    display: none;
+  }
+
+  .index-right-link {
+    display: none;
+  }
+  .index-left-link {
+    display: none;
+  }
+}
+
 
 @media (max-width: 1024px) {
   #name-label {
