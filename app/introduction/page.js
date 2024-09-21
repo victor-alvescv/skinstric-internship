@@ -9,12 +9,8 @@ import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import OkButton from "../components/OkButton";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import dynamic from "next/dynamic";
 
 // Preloader Component
-const Preloader = dynamic(() => import("../components/PreLoader"), {
-  ssr: false, // Ensure it only loads on the client side
-});
 
 const libraries = ["places"];
 
@@ -31,8 +27,6 @@ export default function Introduction() {
   const [validLocation, setValidLocation] = useState(false);
   const [locationLength, setLocationLength] = useState(false);
   const [bottomText, setBottomText] = useState("");
-  const [box, setBox] = useState(true);
-  const [loading, setLoading] = useState(true);
   const infoArr = useMemo(
     () => ({
       name: name,
@@ -165,11 +159,6 @@ export default function Introduction() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const tl = gsap.timeline({
       defaults: { ease: "power4.out", duration: 1 },
     });
@@ -208,15 +197,7 @@ export default function Introduction() {
         { transform: "translate(0px)", opacity: 1 }
       );
     }
-  }, [loading]);
-
-  if (loading) {
-    return (
-      <React.Suspense fallback={<div></div>}>
-        <Preloader />
-      </React.Suspense>
-    );
-  }
+  }, []);
 
   return (
     <div className="flex flex-auto flex-col h-[100vh]">
@@ -309,7 +290,7 @@ export default function Introduction() {
             ) : (
               // location
               <div className="relative">
-                {isLoaded && box && (
+                {isLoaded && (
                   <Autocomplete
                     onLoad={(autocomplete) => {
                       inputGoogleRef.current = autocomplete;

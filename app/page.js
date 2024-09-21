@@ -1,36 +1,58 @@
 "use client";
 import Link from "next/link";
 import Header from "./components/Header";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Button from "./components/Button";
+import dynamic from "next/dynamic";
+
+// Preloader Component
+const Preloader = dynamic(() => import("./components/PreLoader"), {
+  ssr: false, // Ensure it only loads on the client side
+});
 
 export default function Home() {
   const beginRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    gsap.fromTo(
-      "#title",
-      { y: 200 },
-      { y: 0, duration: 1.5, ease: "power4.out" }
-    );
-    gsap.fromTo(
-      "#right-link",
-      { x: -20, opacity: 0, ease: "power2.out" },
-      { x: 0, opacity: 1 }
-    );
-    gsap.fromTo(
-      "#left-link",
-      { x: 50, opacity: 0, ease: "power2.out" },
-      { x: 20, opacity: 1 }
-    );
-    gsap.fromTo("#diamond", { opacity: 0 }, { opacity: 1, duration: 1 });
-    gsap.fromTo(
-      ".experience__btn--wrapper",
-      { opacity: 0 },
-      { opacity: 1, delay: 0.5 }
-    );
+    const preloaderShow = sessionStorage.getItem("preloaderShown");
+    if (!preloaderShow) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem("preloaderShown", "true");
+      }, 6000);
+      return () => clearTimeout(timer);
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      gsap.fromTo(
+        "#title",
+        { y: 200 },
+        { y: 0, duration: 1.5, ease: "power4.out" }
+      );
+      gsap.fromTo(
+        "#right-link",
+        { x: -20, opacity: 0, ease: "power2.out" },
+        { x: 0, opacity: 1 }
+      );
+      gsap.fromTo(
+        "#left-link",
+        { x: 50, opacity: 0, ease: "power2.out" },
+        { x: 20, opacity: 1 }
+      );
+      gsap.fromTo("#diamond", { opacity: 0 }, { opacity: 1, duration: 1 });
+      gsap.fromTo(
+        ".experience__btn--wrapper",
+        { opacity: 0 },
+        { opacity: 1, delay: 0.5 }
+      );
+    }
+  }, [loading]);
 
   function handleAnimationsIn() {
     const titleElement = document.getElementById("title");
@@ -73,6 +95,14 @@ export default function Home() {
       x: "0",
       ease: "power2.out",
     });
+  }
+
+  if (loading) {
+    return (
+      <React.Suspense fallback={<div></div>}>
+        <Preloader />
+      </React.Suspense>
+    );
   }
 
   return (
