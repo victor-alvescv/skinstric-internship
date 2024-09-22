@@ -1,5 +1,4 @@
 "use client";
-
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 
@@ -8,8 +7,8 @@ const Preloader = () => {
   const preloaderMaskRef = useRef(null);
   useEffect(() => {
     const timeout = setTimeout(() => {
-      preloaderRef.current.classList.add("preloader_is-animated");
-      preloaderMaskRef.current.classList.add("preloader_is-animated");
+      preloaderRef.current.classList.add("preloader__animated");
+      preloaderMaskRef.current.classList.add("preloader__animated");
     }, 1000);
 
     const hideTimeout = setTimeout(() => {
@@ -32,32 +31,32 @@ const Preloader = () => {
   }, []);
 
   return (
-    <div ref={preloaderRef} className="preloader_container">
-      <span className="dotted-square-preloader preloader_square scale-1"></span>
+    <div ref={preloaderRef} className="preloader__container">
+      <span className="dotted__square--preloader preloader__square scale-1"></span>
 
       <div
         ref={preloaderMaskRef}
-        className="preloader_square-mask preloader_square-mask-1"
+        className="preloader__square--mask preloader__square--mask1"
       >
-        <div className="preloader_square-mask-inner"></div>
+        <div className="preloader__square--mask-inner"></div>
       </div>
 
-      <span className="dotted-square-preloader preloader_square scale-1-1"></span>
+      <span className="dotted__square--preloader preloader__square scale-1-1"></span>
 
       <div
         ref={preloaderMaskRef}
-        className="preloader_square-mask preloader_square-mask-2"
+        className="preloader__square--mask preloader__square--mask2"
       >
-        <div className="preloader_square-mask-inner"></div>
+        <div className="preloader__square--mask-inner"></div>
       </div>
 
-      <span className="dotted-square-preloader preloader_square scale-1-2"></span>
+      <span className="dotted__square--preloader preloader__square scale-1-2"></span>
 
       <div
         ref={preloaderMaskRef}
-        className="preloader_square-mask preloader_square-mask-3"
+        className="preloader__square--mask preloader__square--mask3"
       >
-        <div className="preloader_square-mask-inner"></div>
+        <div className="preloader__square--mask-inner"></div>
       </div>
     </div>
   );

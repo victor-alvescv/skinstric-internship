@@ -6,7 +6,7 @@ import gsap from "gsap";
 import Button from "../components/Button";
 import axios from "axios";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
-import OkButton from "../components/OkButton";
+import Blackbox from "../components/Blackbox";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -220,7 +220,7 @@ export default function Introduction() {
           >
             <span
               style={{ transform: "rotate(45deg)" }}
-              className="w-[23.43vw] dotted-span-square dotted--square h-[23.43vw] block relative will-change-transform"
+              className="w-[23.43vw] dotted__span--square h-[23.43vw] block relative will-change-transform"
             ></span>
           </div>
           <div
@@ -265,7 +265,6 @@ export default function Introduction() {
                   ></input>
 
                   <label
-                    id="name-label"
                     ref={labelRef}
                     style={{
                       width: `calc((18ch - 5.5ch))`,
@@ -273,7 +272,7 @@ export default function Introduction() {
                     }}
                     className={`text-[#1a1b1c] ${
                       showLabel && !nameLength ? "opacity-[1]" : "opacity-[0]"
-                    } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
+                    } text-center leading-[1.33] left-0 top-[5px] absolute name-label pointer-events-none tracking-[-.07em]`}
                   >
                     Introduce yourself
                   </label>
@@ -320,7 +319,6 @@ export default function Introduction() {
                   </Autocomplete>
                 )}
                 <label
-                  id="name-label"
                   ref={labelRef}
                   style={{
                     width: `calc((21ch - 5.5ch))`,
@@ -328,7 +326,7 @@ export default function Introduction() {
                   }}
                   className={`text-[#1a1b1c] ${
                     showLabel && !locationLength ? "opacity-[1]" : "opacity-[0]"
-                  } text-center leading-[1.33] left-0 top-[5px] absolute pointer-events-none tracking-[-.07em]`}
+                  } text-center leading-[1.33] left-0 top-[5px] name-label absolute pointer-events-none tracking-[-.07em]`}
                 >
                   Where are you from?
                 </label>
@@ -378,7 +376,7 @@ export default function Introduction() {
         </div>
       </main>
       <ToastContainer
-        className={"toast--container"}
+        className={"toast__container"}
         position="top-right"
         autoClose={5000}
         limit={1}
@@ -390,7 +388,7 @@ export default function Introduction() {
         draggable
         pauseOnHover
       ></ToastContainer>
-      <OkButton />
+      <Blackbox />
     </div>
   );
 }

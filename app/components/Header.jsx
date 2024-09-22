@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function Header() {
   useEffect(() => {
     gsap.fromTo(
-      "#cta",
+      ".header__link",
       { clipPath: "inset(0% 80% 0% 80%)", duration: 1 },
       { clipPath: "inset(0% 0% 0% 0%)", duration: 1 }
     );
@@ -17,12 +17,11 @@ export default function Header() {
     <header className="items-center flex justify-between fixed left-[0] top-[0] z-[3] mx-auto w-full h-[64px] px-[32px]">
       <div className="items-center flex relative z-[30] text-[#1a1b1c]">
         <Link
-          id="cta"
           style={{
             clipPath: "inset(0%)",
             fontSize: "clamp(10px, 2px + .625vw, 14px) ",
           }}
-          className="leading-[1.6] tracking-[-.02em] font-roobert dynamic--font2"
+          className="header__link leading-[1.6] tracking-[-.02em] font-roobert dynamic--font2"
           href="/"
         >
           SKINSTRIC
