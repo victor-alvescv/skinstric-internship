@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Header() {
+
+  /* Header Link Animation */
   useEffect(() => {
     gsap.fromTo(
       ".header__link",
@@ -21,7 +23,7 @@ export default function Header() {
             clipPath: "inset(0%)",
             fontSize: "clamp(10px, 2px + .625vw, 14px) ",
           }}
-          className="header__link leading-[1.6] tracking-[-.02em] font-roobert dynamic--font2"
+          className="header__link leading-[1.6] tracking-[-.02em] font-roobert"
           href="/"
         >
           SKINSTRIC

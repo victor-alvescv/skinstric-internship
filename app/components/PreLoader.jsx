@@ -2,9 +2,11 @@
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 
-const Preloader = () => {
+export default function Preloader() {
   const preloaderRef = useRef(null);
   const preloaderMaskRef = useRef(null);
+
+  /* Preloader Animations */
   useEffect(() => {
     const timeout = setTimeout(() => {
       preloaderRef.current.classList.add("preloader__animated");
@@ -12,17 +14,17 @@ const Preloader = () => {
     }, 1000);
 
     const hideTimeout = setTimeout(() => {
-      gsap.to('.scale-1', {
+      gsap.to(".scale-1", {
         y: -50,
-        delay: .2
-      })
-      gsap.to('.scale-1-1', {
+        delay: 0.2,
+      });
+      gsap.to(".scale-1-1", {
         y: -50,
-        delay: .1
-      })
-      gsap.to('.scale-1-2', {
-        y: -50
-      })
+        delay: 0.1,
+      });
+      gsap.to(".scale-1-2", {
+        y: -50,
+      });
     }, 5000);
     return () => {
       clearTimeout(timeout);
@@ -60,6 +62,4 @@ const Preloader = () => {
       </div>
     </div>
   );
-};
-
-export default Preloader;
+}

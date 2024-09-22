@@ -5,37 +5,36 @@
 /* ------------------------ GLOBAL STYLES ------------------------ */
 
 @font-face {
-  font-family: fa;
+  font-family: roobert1;
   src: url("../app/fonts/Roobert1.ttf");
 }
 
 @font-face {
-  font-family: fa2;
+  font-family: roobert2;
   src: url("../app/fonts/Roobert2.ttf");
 }
 
 * {
   box-sizing: border-box;
+  font-family: "roobert2"; /* add fallback font */
 }
 
 ::selection {
-  color: #1a1b1c;
   background: rgba(128, 128, 128, 0.274);
 }
 
 ::placeholder {
-  color: #1a1b1c;
+  color: var(--main-color);
+  color: gray;
 }
 
 input::placeholder {
   color: gray;
-  font-family: fa2;
 }
 
 body {
-  font-family: "fa2"; /* Ensure to provide a fallback font */
-  background-color: #fcfcfc;
-  color: #1a1b1c;
+  background-color: var(--bg-color);
+  color: var(--main-color);
   overflow-x: hidden;
   min-height: calc(var(--vh, 1vh) * 100);
   height: 100%;
@@ -48,19 +47,16 @@ body {
 }
 
 .font-roobert {
-  font-family: "fa" !important;
+  font-family: "roobert1" !important;
 }
 
-.dynamic--font {
-  font-size: clamp(86px, 2px + 6.5625vw, 128px);
-}
-
-.dynamic--font2 {
-  font-size: clamp(10px, 2px + 0.625vw, 14px);
-}
-
-.dynamic--font3 {
-  font-size: clamp(10px, 2px + 0.625vw, 14px);
+:root {
+  --x-space: 32px;
+  --main-color: #1a1b1c;
+  --bg-color: #fcfcfc;
+  --main-square-size: 23.43vw;
+  --rotation: 45deg;
+  --rotation-reversed: -45deg
 }
 
 /* ------------------------ MAIN PAGE ------------------------ */
@@ -82,11 +78,9 @@ body {
   padding-bottom: 36px;
   position: relative;
   z-index: 1;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   max-width: 2560px;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding: 0 var(--x-space) 36px var(--x-space);
   width: 100%;
 }
 
@@ -117,7 +111,7 @@ body {
 .index__title span {
   position: relative;
   display: inline-block;
-  will-change: transform;
+  will-change: inherit;
 }
 
 .experience__btn--wrapper {
@@ -126,15 +120,16 @@ body {
 
 /* ------------------------ SQUARE ------------------------ */
 
-.dotted__square {
-  opacity: 1;
-  width: 23.43vw;
-  height: 23.43vw;
-  left: 0;
-  transform: translate(-50%, -50%) rotate(45deg);
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
+.dotted__square,
+.dotted__square2,
+.dotted__square2:after,
+.dotted__square2:before,
+.dotted__span--square,
+.dotted__span--square:after,
+.dotted__span--square:before,
+.dotted__square--preloader,
+.dotted__square--preloader:after,
+.dotted__square--preloader:before {
   background-image: repeating-linear-gradient(
       -18deg,
       #58595a,
@@ -170,6 +165,17 @@ body {
   background-position: 0 0, 0 0, 100% 0, 0 100%;
   background-repeat: no-repeat;
   background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
+}
+
+
+.dotted__square {
+  width: var(--main-square-size);
+  height: var(--main-square-size);
+  left: 0;
+  transform: translate(-50%, -50%) rotate(var(--rotation));
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
   display: block;
   will-change: transform;
 }
@@ -211,7 +217,7 @@ body {
   justify-content: center;
   padding: calc(24px * 0.35);
   position: relative;
-  transform: rotate(45deg);
+  transform: rotate(var(--rotation));
   width: inherit;
 }
 
@@ -234,7 +240,7 @@ body {
 }
 
 .svg__btn {
-  transform: rotate(-45deg);
+  transform: rotate(var(--rotation-reversed));
   height: auto;
   vertical-align: middle;
   max-width: 100%;
@@ -259,46 +265,11 @@ body {
 
 .dotted__square2 {
   right: 0;
-  transform: translate(50%, -50%) rotate(45deg);
-  width: 23.43vw;
-  height: 23.43vw;
+  transform: translate(50%, -50%) rotate(var(--rotation));
+  width: var(--main-square-size);
+  height: var(--main-square-size);
   position: absolute;
   top: 50%;
-  background-image: repeating-linear-gradient(
-      -18deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      72deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      162deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      252deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    );
-  background-position: 0 0, 0 0, 100% 0, 0 100%;
-  background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
   display: block;
   will-change: transform;
 }
@@ -314,41 +285,6 @@ body {
   position: absolute;
   top: 50%;
   width: inherit;
-  background-image: repeating-linear-gradient(
-      -18deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      72deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      162deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      252deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    );
-  background-position: 0 0, 0 0, 100% 0, 0 100%;
-  background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
 }
 
 .dotted__square2:before {
@@ -379,7 +315,7 @@ body {
 
 .dotted__square--link {
   margin-right: 32px;
-  color: #1a1b1c;
+  color: var(--main-color);
   align-items: center;
   cursor: pointer;
   display: inline-flex;
@@ -456,46 +392,6 @@ body {
   pointer-events: none;
 }
 
-.dotted__span--square,
-.dotted__span--square:after,
-.dotted__span--square:before {
-  background-image: repeating-linear-gradient(
-      -18deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      72deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      162deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      252deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    );
-  background-position: 0 0, 0 0, 100% 0, 0 100%;
-  background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
-}
-
 .dotted__span--square:before {
   border: inherit;
   content: "";
@@ -541,14 +437,12 @@ body {
   min-height: 64px;
   overflow: hidden;
   padding: 8px;
-  font-family: fa;
 }
 
 .Toastify__toast-body {
   padding: 10px !important;
   justify-content: space-between;
   gap: 8px;
-  font-family: fa2 !important;
 }
 
 .Toastify__zoom-enter svg {
@@ -577,7 +471,7 @@ body {
   justify-content: center;
   padding: calc(24px * 0.35);
   position: relative;
-  transform: rotate(45deg);
+  transform: rotate(var(--rotation));
   width: inherit;
 }
 
@@ -588,7 +482,7 @@ body {
 }
 
 .icon__btn--reverse {
-  transform: rotate(-45deg) !important;
+  transform: rotate(var(--rotation-reversed)) !important;
 }
 
 .icon__btn--content:before {
@@ -640,7 +534,7 @@ body {
 
 .box__wrapper:before {
   transform: scaleY(1);
-  background-color: #1a1b1c;
+  background-color: var(--main-color);
   content: "";
   left: 0;
   top: 0;
@@ -654,7 +548,7 @@ body {
   transform: scaleX(1);
   height: 1px;
   transform-origin: 0 50%;
-  background-color: #1a1b1c;
+  background-color: var(--main-color);
   content: "";
   left: 0;
   position: absolute;
@@ -665,7 +559,7 @@ body {
 .box__btn--wrapper {
   cursor: pointer;
   border: none;
-  background-color: #1a1b1c;
+  background-color: var(--main-color);
   display: inline-block;
   flex-shrink: 0;
   overflow: clip;
@@ -683,7 +577,7 @@ body {
   align-items: center;
   display: inline-flex;
   transition: transform 0.3s cubic-bezier(0.08, 0.5, 0.44, 0.96);
-  font-family: fa;
+  font-family: "roobert1";
 }
 
 .box__btn:after {
@@ -696,7 +590,7 @@ body {
   transition: transform 0.3s cubic-bezier(0.08, 0.5, 0.44, 0.96);
   width: 100%;
   z-index: 1;
-  font-family: fa;
+  font-family: "roobert1";
 }
 
 .box__btn--wrapper:hover .box__btn {
@@ -713,7 +607,7 @@ body {
   --transition-2-base-delay: 0.2s;
   --transition-3-base-delay: 0s;
   background-color: transparent;
-  color: #1a1b1c;
+  color: var(--main-color);
   height: 100%;
   left: 0;
   transition: all 300ms ease;
@@ -726,7 +620,7 @@ body {
 
 .dotted__square--preloader {
   --base-transform: translate(0);
-  --base-rotation: 45deg;
+  --base-rotation: var(--rotation);
   --size: 200px;
   --transition-duration: 0.3s;
   display: block;
@@ -735,46 +629,6 @@ body {
   transform: rotate(var(--base-rotation));
   width: var(--size);
   will-change: transform;
-}
-
-.dotted__square--preloader,
-.dotted__square--preloader:after,
-.dotted__square--preloader:before {
-  background-image: repeating-linear-gradient(
-      -18deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      72deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      162deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    ),
-    repeating-linear-gradient(
-      252deg,
-      #58595a,
-      #58595a 1px,
-      #0000 0,
-      #0000 5px,
-      #58595a 0
-    );
-  background-position: 0 0, 0 0, 100% 0, 0 100%;
-  background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1px;
 }
 
 .dotted__square--preloader:after,
@@ -827,14 +681,14 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(var(--rotation));
 }
 .preloader__square.scale-1-1 {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.1);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.1);
   opacity: 0.6;
 }
 .preloader__square.scale-1-2 {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.2);
   opacity: 0.4;
 }
 .preloader__square--mask,
@@ -842,7 +696,7 @@ body {
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(var(--rotation));
 }
 .preloader__square--mask {
   --transition-base-delay: 0s;
@@ -860,7 +714,7 @@ body {
 }
 .preloader__square--mask:after,
 .preloader__square--mask:before {
-  background-color: #fcfcfc;
+  background-color: var(--bg-color);
   content: "";
   opacity: 1;
   position: absolute;
@@ -890,7 +744,7 @@ body {
 }
 .preloader__square--mask-inner:after,
 .preloader__square--mask-inner:before {
-  background-color: #fcfcfc;
+  background-color: var(--bg-color);
   content: "";
   opacity: 1;
   position: absolute;
@@ -909,11 +763,11 @@ body {
 }
 .preloader__square--mask2 {
   --transition-base-delay: var(--transition-2-base-delay);
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.1);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.1);
 }
 .preloader__square--mask3 {
   --transition-base-delay: var(--transition-3-base-delay);
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+  transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.2);
 }
 .preloader__square:before,
 .preloader__square:after {
@@ -924,7 +778,7 @@ body {
 
 @keyframes spin {
   0% {
-    transform: rotate(45deg);
+    transform: rotate(var(--rotation));
   }
   to {
     transform: rotate(360deg);
@@ -970,13 +824,13 @@ body {
   }
 
   .dotted__square {
-    transform: translate(-50%, -50%) translate(50vw) rotate(45deg);
+    transform: translate(-50%, -50%) translate(50vw) rotate(var(--rotation));
     height: 42vw;
     width: 42vw;
   }
 
   .dotted__square2 {
-    transform: translate(50%, -50%) translate(-50vw) rotate(45deg) scale(1.15);
+    transform: translate(50%, -50%) translate(-50vw) rotate(var(--rotation)) scale(1.15);
     height: 42vw;
     width: 42vw;
   }
@@ -992,7 +846,7 @@ body {
   }
 
   .experience__btn {
-    color: #1a1b1c;
+    color: var(--main-color);
     display: inline-flex;
     align-items: center;
     flex-shrink: 0;

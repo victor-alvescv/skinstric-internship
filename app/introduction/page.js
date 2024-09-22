@@ -4,14 +4,12 @@ import Header from "../components/Header";
 import Link from "next/link";
 import gsap from "gsap";
 import Button from "../components/Button";
-import axios from "axios";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import Blackbox from "../components/Blackbox";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Preloader Component
-
+/* Google API libraries variable */
 const libraries = ["places"];
 
 export default function Introduction() {
@@ -24,7 +22,6 @@ export default function Introduction() {
   const [phase1, setPhase1] = useState(true);
   const [phase2, setPhase2] = useState(false);
   const [nameLength, setNameLength] = useState(false);
-  const [validLocation, setValidLocation] = useState(false);
   const [locationLength, setLocationLength] = useState(false);
   const [bottomText, setBottomText] = useState("");
   const infoArr = useMemo(
@@ -45,35 +42,20 @@ export default function Introduction() {
   const proceedRef = useRef(null);
   const inputGoogleRef = useRef(null);
 
-  // Google Api
+  /* Google API Data */
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_PLACES_API_KEY,
     libraries,
   });
 
-  // Handle API
-  async function handleData() {
-    try {
-      const apiEndpoint =
-        "https://wk7wmfz7x8.execute-api.us-east-2.amazonaws.com/live/FES_Virtual_Internship_1/level2";
-      const response = await axios.post(apiEndpoint, infoArr);
-      console.log("Data successfully submitted:", response.data);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    }
-  }
-
-  useEffect(() => {
-    console.log(infoArr);
-  }, [infoArr]);
-
-  // Phase Cases
-  function previousPhase() {
+  /* Back Btn Behavior */
+  function handleBack() {
     setPhase1(true);
     setShowLabel(false);
     setProceed(true);
   }
 
+  /* Proceed Btn Behavior */
   function handleProceed() {
     setShowLabel(true);
     setPhase2(true);
@@ -81,6 +63,38 @@ export default function Introduction() {
     setPhase1(false);
   }
 
+  /* Name Input Event */
+  function handleName(event) {
+    setName(event.target.value || "");
+    setNameLength(event.target.value.length > 0);
+    setProceed(event.target.value.length > 0);
+  }
+
+  /* Name Input 'Enter' Functionality */
+  function handleNameKeyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (!nameLength) {
+        return;
+      }
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+      setProceed(true);
+      setShowLabel(true);
+      setPhase2(true);
+      setProceed(false);
+      setPhase1(false);
+    }
+  }
+
+  /* Location Input Event */
+  function handleLocation(event) {
+    setLocation(event.target.value || "");
+    setLocationLength(event.target.value.length > 0);
+  }
+
+  /* Location Input 'Enter' Error Handling */
   function handleLocationKeyDown(event) {
     if (event.key === "Enter") {
       if (!locationLength) {
@@ -101,23 +115,7 @@ export default function Introduction() {
     }
   }
 
-  function handleNameKeyDown(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (!nameLength) {
-        return;
-      }
-      if (inputRef.current) {
-        inputRef.current.blur();
-      }
-      setProceed(true);
-      setShowLabel(true);
-      setPhase2(true);
-      setProceed(false);
-      setPhase1(false);
-    }
-  }
-
+  /* OnBlur and OnFocus Input Behavior */
   function handleInputAnimations(elem) {
     if (elem === 2) {
       setLabelText(2);
@@ -128,19 +126,7 @@ export default function Introduction() {
     }
   }
 
-  // onChanges
-  function handleName(event) {
-    setName(event.target.value || "");
-    setNameLength(event.target.value.length > 0);
-    setProceed(event.target.value.length > 0);
-  }
-
-  function handleLocation(event) {
-    setLocation(event.target.value || "");
-    setLocationLength(event.target.value.length > 0);
-  }
-
-  // Handle Place Change
+  /* Google API Place Selection Function */
   const handlePlaceChanged = () => {
     setBottomText("");
     if (inputGoogleRef.current) {
@@ -151,13 +137,11 @@ export default function Introduction() {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
         });
-        setValidLocation(true);
-      } else {
-        setValidLocation(false);
       }
     }
   };
 
+  /* Introduction Page Animations */
   useEffect(() => {
     const tl = gsap.timeline({
       defaults: { ease: "power4.out", duration: 1 },
@@ -242,7 +226,7 @@ export default function Introduction() {
                 : "WHERE ARE YOU FROM?"}
             </div>
             {phase1 ? (
-              <form // name
+              <form
                 onKeyDown={handleNameKeyDown}
                 ref={formRef}
                 style={{
@@ -287,7 +271,6 @@ export default function Introduction() {
                 </div>
               </form>
             ) : (
-              // location
               <div className="relative">
                 {isLoaded && (
                   <Autocomplete
@@ -350,7 +333,7 @@ export default function Introduction() {
               style={{ flex: "0 1 25%" }}
               className="mr-auto pr-[10px]"
               href={phase1 ? "/" : ""}
-              onClick={previousPhase}
+              onClick={handleBack}
             >
               <Button label={"BACK"} arrow={"left"} order={"icon-first"} />
             </Link>

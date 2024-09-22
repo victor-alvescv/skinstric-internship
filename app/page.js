@@ -6,6 +6,7 @@ import gsap from "gsap";
 import Button from "./components/Button";
 import dynamic from "next/dynamic";
 
+/* Preloader Component Imported */
 const Preloader = dynamic(() => import("./components/PreLoader"), {
   ssr: false,
 });
@@ -14,6 +15,7 @@ export default function Home() {
   const beginRef = useRef(null);
   const [loading, setLoading] = useState(true);
 
+  /* Page Loading and Showing Behavior */
   useEffect(() => {
     const preloaderShow = sessionStorage.getItem("preloaderShown");
     if (!preloaderShow) {
@@ -27,6 +29,7 @@ export default function Home() {
     }
   }, []);
 
+  /* Page Animations */
   useEffect(() => {
     if (!loading) {
       gsap.fromTo(
@@ -53,6 +56,7 @@ export default function Home() {
     }
   }, [loading]);
 
+  /* Animations In on Hover Btn */
   function handleAnimationsIn() {
     const titleElement = document.querySelector(".index__title--wrapper");
     const titleRect = titleElement.getBoundingClientRect();
@@ -77,6 +81,7 @@ export default function Home() {
     });
   }
 
+  /* Animations Out on Hover Btn */
   function handleAnimationsOut() {
     beginRef.current.classList.remove("begin__btn");
     gsap.to(".index__title--wrapper", {
@@ -96,6 +101,7 @@ export default function Home() {
     });
   }
 
+  /* loading = Preloader | !loading = <div id="__next">... */
   if (loading) {
     return (
       <React.Suspense fallback={<div></div>}>

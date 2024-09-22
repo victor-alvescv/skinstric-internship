@@ -1,9 +1,11 @@
+
 export const metadata = {
   title: "Skinstric | Introduction",
   description: "The official Next.js Course Dashboard, built with App Router.",
   metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
 };
 
+/* Introduction Page Layout */
 export default function RootLayout({ children }) {
   return (
     <>

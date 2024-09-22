@@ -6,6 +6,7 @@ export const metadata = {
   metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
 };
 
+/* Main Page Layout */
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

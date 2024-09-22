@@ -1,6 +1,10 @@
+
+
+
 export default function Button({ label, arrow, order, main }) {
+  
   return (
-    <div className="btn__wrapper inline-flex items-center justify-center dynamic--font3 leading-[1.6] tracking-[-.02em]">
+    <div className="btn__wrapper inline-flex items-center justify-center leading-[1.6] tracking-[-.02em]">
       <span
         style={{
           fontSize: "clamp(10px, 2px + .625vw, 14px)",

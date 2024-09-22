@@ -13,6 +13,7 @@ export default function Blackbox() {
     }, 1000);
   }, []);
 
+  /* Blackbox initial Animations */
   useEffect(() => {
     if (boxRef.current && blackBox) {
       gsap.set(boxRef.current, {
@@ -34,6 +35,7 @@ export default function Blackbox() {
     }
   }, [blackBox]);
 
+  /* Blackbox onClick Animations */
   function handleBtn() {
     gsap.to(boxRef.current, {
       height: "1px",
