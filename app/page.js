@@ -229,15 +229,6 @@ export default function Home() {
           </div>
           <div className="background__overlay">
             <div className="background__wrapper">
-              <video
-                className="video__content"
-                preload="auto"
-                muted
-                autoPlay
-                loop
-              >
-                <source muted src="bubble-animation.mp4" type="video/mp4"></source>
-              </video>
               <img className="image__content opacity-0" src="bubble-bg.jpg" />
             </div>
           </div>
