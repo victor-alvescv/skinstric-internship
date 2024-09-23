@@ -8,6 +8,7 @@ import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import Blackbox from "../components/Blackbox";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 /* Google API libraries variable */
 const libraries = ["places"];
@@ -24,6 +25,7 @@ export default function Introduction() {
   const [nameLength, setNameLength] = useState(false);
   const [locationLength, setLocationLength] = useState(false);
   const [bottomText, setBottomText] = useState("");
+  const router = useRouter();
   const infoArr = useMemo(
     () => ({
       name: name,
@@ -62,6 +64,10 @@ export default function Introduction() {
     setProceed(false);
     setPhase1(false);
   }
+
+  useEffect(() => {
+    console.log(infoArr, name);
+  }, [infoArr]);
 
   /* Name Input Event */
   function handleName(event) {
@@ -129,6 +135,7 @@ export default function Introduction() {
   /* Google API Place Selection Function */
   const handlePlaceChanged = () => {
     setBottomText("");
+    localStorage.setItem("name", name);
     if (inputGoogleRef.current) {
       const place = inputGoogleRef.current.getPlace();
       if (place && place.geometry) {
@@ -137,6 +144,18 @@ export default function Introduction() {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
         });
+        setTimeout(() => {
+          gsap.fromTo(
+            ".introduction",
+            {
+              opacity: 1,
+            },
+            { opacity: 0 }
+          );
+        }, 800);
+        setTimeout(() => {
+          router.push("/welcome");
+        }, 1600);
       }
     }
   };
@@ -184,7 +203,7 @@ export default function Introduction() {
   }, []);
 
   return (
-    <div className="flex flex-auto flex-col h-[100vh]">
+    <div className="flex introduction flex-auto flex-col h-[100vh]">
       <Header className="pl-[32px]" />
       <main className="relative flex flex-auto flex-col">
         <div className="overflow-clip flex flex-auto flex-col pb-[36px] relative ml-auto mr-auto px-[32px] w-full">

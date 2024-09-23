@@ -4,8 +4,7 @@ import gsap from "gsap";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function Header() {
-
+export default function Header({ btnOn }) {
   /* Header Link Animation */
   useEffect(() => {
     gsap.fromTo(
@@ -29,6 +28,15 @@ export default function Header() {
           SKINSTRIC
         </Link>
       </div>
+      {btnOn && (
+        <div className="flex items-center relative z-[30]">
+          <div className="items-center flex">
+            <button className="cursor-not-allowed bg-[#1a1b1c] relative text-center border-[1px] border-[#1a1b1c] header__btn--wrapper rounded-none px-[16px] py-[8px] text-[#fcfcfc] inline-block flex-shrink-0">
+              <span className="items-center font-roobert inline-flex transition-all">CONSULT CHEMIST</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
