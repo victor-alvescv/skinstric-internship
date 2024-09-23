@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
 
 export default function Welcome() {
   const [name, setName] = useState("");
+  const router = useRouter()
 
   useEffect(() => {
     const savedName = localStorage.getItem("name");
@@ -15,6 +17,8 @@ export default function Welcome() {
         { opacity: 0, delay: 1 },
         { opacity: 1, delay: 1 }
       );
+    } else if(!savedName) {
+        router.push('/introduction')
     }
   }, []);
 

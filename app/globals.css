@@ -485,6 +485,10 @@ body {
   transform: rotate(315deg) !important;
 }
 
+.black__diamond--notFound {
+  animation: rotateDiamond 1s linear infinite;
+}
+
 /* ------------------------ TOAST ------------------------ */
 
 .toast__container {
@@ -843,6 +847,28 @@ body {
 }
 
 /* ------------------------ ANIMATIONS ------------------------ */
+
+@keyframes rotateDiamond {
+  0% {
+    transform: rotate(45deg)
+  }
+  
+  40% {
+    transform: rotate(135deg)
+  }
+
+  50% {
+    transform: rotate(135deg)
+  }
+
+  60% {
+    transform: rotate(135deg)
+  }
+
+  to {
+    transform: rotate(315deg)
+  }
+}
 
 @keyframes spin {
   0% {
