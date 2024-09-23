@@ -19,17 +19,24 @@ export default function Welcome() {
   }, []);
 
   return (
-    <div className="flex flex-col welcome flex-auto">
+    <div className="flex flex-col welcome opacity-[0] flex-auto">
       <Header btnOn={true} />
       <main className="relative flex flex-col flex-auto">
         <div className="page">
           <div className="header__padding-welcome--container"></div>
           <div>
-            <h1 className={`welcome__title transition-all uppercase max-w-[1000px] text-ellipsis whitespace-nowrap overflow-hidden`}>
+            <h1
+              className={`welcome__title transition-all uppercase max-w-[1000px] text-ellipsis whitespace-nowrap overflow-hidden`}
+            >
               {name && <span>WELCOME {name.trim().split(" ")[0]}</span>}
               <br />
             </h1>
-            <span style={{ fontSize: "clamp(14px, 4px + .625vw, 16px)" }} className={`welcome__subtitle ${!name && 'opacity-[0]'} transition-all`}>
+            <span
+              style={{ fontSize: "clamp(14px, 4px + .625vw, 16px)" }}
+              className={`welcome__subtitle ${
+                !name && "opacity-[0]"
+              } transition-all`}
+            >
               Pick one of the two options to
               <br />
               navigate our skincare platform.
@@ -57,8 +64,6 @@ export default function Welcome() {
                 </div>
                 <div className="flex justify-center items-center w-full"></div>
                 <div className="h-[37.5px] absolute bottom-0 w-full overflow-hidden transition-all duration-500 ease-in-out">
-                  {" "}
-                  {/* OK */}
                   <div className=" bg-[#1A1B1C] w-full transition-all duration-500 ease-in-out h-[1px]"></div>
                   <div className="flex w-full items-center h-full">
                     <button className="w-full text-[16px] cursor-not-allowed font-roobert tracking-[-0.02em] leading-[1.5] items-center flex justify-center">
