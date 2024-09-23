@@ -231,7 +231,7 @@ export default function Home() {
                 autoPlay
                 loop
               >
-                <source src="bubble-animation.mp4" type="video/mp4"></source>
+                <source muted src="bubble-animation2.mp4" type="video/mp4"></source>
               </video>
             </div>
           </div>
