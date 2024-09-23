@@ -47,7 +47,7 @@ export default function Welcome() {
                   </div>
                   <h6 className="tracking-[-.02em] leading-8 text-2xl mt-3 mb-0">
                     <p className="max-w-[288px] my-0">
-                      Let's Talk.
+                      Let&apos;s Talk.
                       <span className="font-roobert">
                         {" "}
                         Book a Consult With Our Chemist
