@@ -30,7 +30,7 @@ export default function Button({ label, arrow, order, main }) {
           className="icon__btn--content"
         >
           <svg
-            className={`${arrow === "left" && "icon__btn--reverse"}`}
+            className={`${arrow === "left" && "icon__btn--reverse"} btn__svg`}
             width="8"
             height="8"
             viewBox="0 0 11 12"

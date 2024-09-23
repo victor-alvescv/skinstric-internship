@@ -61,7 +61,7 @@ export default function Blackbox() {
             fontSize: "clamp(12px, 4px + .625vw, 16px)",
             overflow: "hidden",
           }}
-          className="left-[32px] box__wrapper fixed top-[64px] z-[20] w-[432px] text-[#fcfcfc] tracking-[0] max-w-full"
+          className="left-[32px] box__wrapper fixed top-[64px] w-[432px] z-[20] text-[#fcfcfc] tracking-[0] max-w-full"
         >
           <div className="border-b border-solid relative py-[12px] px-[15px] font-roobert text-[#fcfcfc]">
             This is our test environment, and we&apos;re currently in open Beta.

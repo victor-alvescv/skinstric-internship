@@ -383,7 +383,7 @@ body {
   z-index: -2;
 }
 
-.video__wrapper {
+.background__wrapper {
   height: 100vh !important;
   width: 100% !important;
 }
@@ -405,6 +405,14 @@ body {
   object-position: center;
   width: 100%;
   height: 100%;
+}
+
+.image__content {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  display: none;
 }
 
 /* ------------------------ INTRODUCTION ------------------------ */
@@ -549,7 +557,6 @@ body {
 
 .icon__btn--content svg {
   height: auto;
-  max-width: 100%;
   transform: rotate(15deg);
 }
 
@@ -932,6 +939,10 @@ body {
     width: 42vw;
   }
 
+  .icon__btn {
+    margin-bottom: 4px;
+  }
+
   .dotted__square2 {
     transform: translate(50%, -50%) translate(-50vw) rotate(var(--rotation))
       scale(1.15);
@@ -967,15 +978,16 @@ body {
 }
 
 @media (max-width: 1024px) {
-  #name-label {
-    font-size: 34px !important;
-  }
   input {
     font-size: 34px !important;
   }
-  .dotted-span-square {
+  .dotted__span--square {
     width: 38vw;
     height: 38vw;
+  }
+
+  .name-label {
+    font-size: 34px !important;
   }
 }
 
@@ -993,15 +1005,30 @@ body {
     display: none;
   }
 
+  .video__content {
+    display: none;
+  }
+
+  .image__content {
+    display: inline;
+  }
+
   .dotted__square,
   .dotted__square2 {
     width: 60vw;
     height: 60vw;
   }
+  .icon__btn--content {
+    padding: calc(18px * 0.35) !important;
+  }
+
+  .btn__svg {
+    width: 6px !important;
+  }
 }
 
 @media (max-width: 700px) {
-  .dotted-span-square {
+  .dotted__span--square {
     width: 48vw;
     height: 48vw;
   }
@@ -1026,7 +1053,7 @@ body {
 
 @media (max-width: 500px) {
   .box__wrapper {
-    width: 350px !important;
+    max-width: 350px !important;
   }
   .dotted__square,
   .dotted__square2 {
@@ -1037,7 +1064,7 @@ body {
 
 @media (max-width: 410px) {
   .box__wrapper {
-    width: 280px !important;
     font-size: 10px !important;
+    max-width: 280px !important;
   }
 }
