@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Header from "./components/Header";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Button from "./components/Button";
 import dynamic from "next/dynamic";
@@ -15,7 +15,20 @@ export default function Home() {
   const beginRef = useRef(null);
   const [loading, setLoading] = useState(true);
 
-  /* Page Loading and Showing Behavior */
+  /* Page Loading */
+  useEffect(() => {
+    const handlePageLoad = () => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 7000);
+    };
+
+    window.addEventListener("load", handlePageLoad);
+
+    return () => window.addEventListener("load", handlePageLoad);
+  }, []);
+
+  /* Showing Behavior */
   useEffect(() => {
     const preloaderShow = sessionStorage.getItem("preloaderShown");
     if (!preloaderShow) {
@@ -37,11 +50,17 @@ export default function Home() {
         { y: 200 },
         { y: 0, duration: 1.5, ease: "power4.out" }
       );
-      gsap.fromTo('.image__content', {
-        opacity: 0
-      }, {
-        opacity: 1
-      })
+      gsap.fromTo(
+        ".background__wrapper",
+        {
+          opacity: 0,
+          delay: .2
+        },
+        {
+          opacity: 1,
+          delay: .2
+        }
+      );
       gsap.fromTo(
         ".btn__wrapper",
         { x: -20, opacity: 0, ease: "power2.out" },
@@ -109,9 +128,9 @@ export default function Home() {
   /* loading = Preloader | !loading = <div id="__next">... */
   if (loading) {
     return (
-      <React.Suspense fallback={<div></div>}>
+      <Suspense fallback={<div></div>}>
         <Preloader />
-      </React.Suspense>
+      </Suspense>
     );
   }
 
@@ -228,8 +247,21 @@ export default function Home() {
             </div>
           </div>
           <div className="background__overlay">
-            <div className="background__wrapper">
-              <img className="image__content opacity-0" src="bubble-bg.jpg" />
+            <div className="background__wrapper opacity-0">
+              <video
+                className="video__content"
+                preload="auto"
+                muted
+                autoPlay
+                loop
+              >
+                <source
+                  muted
+                  src="bubble-animation.mp4"
+                  type="video/mp4"
+                ></source>
+              </video>
+              <img className="image__content" src="bubble-bg.jpg" />
             </div>
           </div>
           <div className="glassy__container"></div>
