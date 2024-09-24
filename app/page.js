@@ -51,7 +51,7 @@ export default function Home() {
         { y: 0, duration: 1.5, ease: "power4.out" }
       );
       gsap.fromTo(
-        ".background__wrapper",
+        ".image__content",
         {
           opacity: 0,
           delay: .2
@@ -247,7 +247,7 @@ export default function Home() {
             </div>
           </div>
           <div className="background__overlay">
-            <div className="background__wrapper opacity-0">
+            <div className="background__wrapper">
               <video
                 className="video__content"
                 preload="auto"
@@ -261,7 +261,7 @@ export default function Home() {
                   type="video/mp4"
                 ></source>
               </video>
-              <img className="image__content" src="bubble-bg.jpg" />
+              <img className="image__content  opacity-0" src="bubble-bg.jpg" />
             </div>
           </div>
           <div className="glassy__container"></div>
