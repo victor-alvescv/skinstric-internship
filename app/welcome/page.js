@@ -78,7 +78,7 @@ export default function Welcome() {
               </div>
 
               <div className="lg:flex justify-center items-center flex-col hidden">
-                <img className="align-middle" src="preffered-cross.svg"></img>
+                <img alt="skinstric-cross" className="align-middle" src="preffered-cross.svg"></img>
                 <p className="opacity-50 text-xs pt-2 my-0 leading-[1rem] text-[#1A1B1C]">
                   EXPLAINER VIDEO
                 </p>

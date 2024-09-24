@@ -261,7 +261,7 @@ export default function Home() {
                   type="video/mp4"
                 ></source>
               </video>
-              <img className="image__content  opacity-0" src="bubble-bg.jpg" />
+              <img className="image__content  opacity-0" alt="bubble-bg" src="bubble-bg.jpg" />
             </div>
           </div>
           <div className="glassy__container"></div>
